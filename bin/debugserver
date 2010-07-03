@@ -4,6 +4,39 @@ lib = File.expand_path(File.dirname(__FILE__) + '/../lib')
 puts lib
 $LOAD_PATH.unshift(lib) if File.directory?(lib) && !$LOAD_PATH.include?(lib)
 
+require 'rubygems'
+require 'optparse'
 require 'debugserver'
 
+options = {
+  :host => 'localhost',
+  :port => 9000
+}
+
+optparse = OptionParser.new do |opts|
+  opts.banner = "Usage: debugserver [options]"
+  
+  opts.on('-h', '--host HOSTNAME', 'Server hostname') do |host|
+    options[:host] = host
+  end
+  
+  opts.on('-p', '--port PORT', 'Server port') do |port|
+    options[:port] = port
+  end
+  
+  opts.on('-i', '--info', 'Get usage information') do
+    puts opts
+    exit
+  end
+end
+
+begin
+  optparse.parse!
+rescue OptionParser::InvalidOption, OptionParser::MissingArgument
+  puts $!.to_s
+  puts optparse
+  exit
+end
+
+DebugServer.configure(options[:host], options[:port])
 DebugServer.start

@@ -14,11 +14,8 @@ module DebugServer
     LEVEL_ERROR => :red
   }
   
-  @@config = {
-    :host => 'localhost',
-    :port => '9000'
-  }
-  
+  @@config = {}
+    
   def self.configure(host='localhost', port=9000)
     @@config[:host] = host
     @@config[:port] = port
