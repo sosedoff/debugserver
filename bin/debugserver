@@ -33,7 +33,6 @@ end
 begin
   optparse.parse!
 rescue OptionParser::InvalidOption, OptionParser::MissingArgument
-  puts $!.to_s
   puts optparse
   exit
 end
